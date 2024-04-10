@@ -1,7 +1,8 @@
 import pyodbc
-import Matrix_Erstellen
-
+import Matrix_Erstellen 
+import Kontrolle
 liste_Datenbank = []
+listeWetter =[]
 liste_Neu = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]] 
 
 from datetime import timedelta
@@ -16,6 +17,7 @@ dtZeit48 = timedelta(
     minutes=0,
     seconds=0
 )
+iIndex_Liste1=0
 
 # Verbindungsdaten
 server = 'sc-db-server.database.windows.net'
@@ -32,7 +34,7 @@ conn_str = (
 )
 # Verbindung herstellen
 conn = pyodbc.connect(conn_str)
-# Cursor erstellen
+# Cursor erstelneue_listelen
 cursor = conn.cursor()
 # SQL-Statement ausführen
 cursor.execute('SELECT * FROM v_coolchain order by transportID,datetime')
@@ -54,5 +56,9 @@ neue_liste = [feld for feld in liste_Neu  if feld != []]
 # Kontrolle ob alle 20 IDs aufgelistet sind        
 if len(neue_liste) < 20:
     print("Ein oder mehrer Einträge fehlen")
-print(neue_liste[18][0][2])
 
+Kontrolle.stationsKontrolle(neue_liste)
+
+Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter)
+
+print(listeWetter)
