@@ -16,8 +16,7 @@ dtZeit48 = timedelta(
     hours=0,
     minutes=0,
     seconds=0
-)
-iIndex_Liste1=0
+
 
 # Verbindungsdaten
 server = 'sc-db-server.database.windows.net'
