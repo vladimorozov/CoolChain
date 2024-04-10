@@ -1,7 +1,9 @@
 import pyodbc
 import Matrix_Erstellen 
 import Kontrolle
-liste_Datenbank = []
+import Temperaturueberwachung
+liste_DatenbankCoolChain = []
+liste_DatenbankTemp = []
 listeWetter =[]
 liste_Neu = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]] 
 
@@ -16,7 +18,7 @@ dtZeit48 = timedelta(
     hours=0,
     minutes=0,
     seconds=0
-
+)
 
 # Verbindungsdaten
 server = 'sc-db-server.database.windows.net'
@@ -40,14 +42,22 @@ cursor.execute('SELECT * FROM v_coolchain order by transportID,datetime')
 # Ergebnisse ausgeben
 for row in cursor:
     a = row
-    liste_Datenbank.append(a) #Matrix wird aus der Datentabelle übernommen   
+    liste_DatenbankCoolChain.append(a) #Matrix wird aus der Datentabelle übernommen
+
+
 # Verbindung schließen
 cursor.close()
+cursor2 = conn.cursor()
+cursor2.execute('SELECT * FROM v_tempdata')
+for row in cursor2:
+    b = row
+    liste_DatenbankTemp.append(b)   
+cursor2.close()
 conn.close()
 
 #die Datentabelle wird in einzelne Listen nach IDs unterteilt
 
-Matrix_Erstellen.erstellen(liste_Neu,liste_Datenbank)
+Matrix_Erstellen.erstellen(liste_Neu,liste_DatenbankCoolChain)
 
 neue_liste = [feld for feld in liste_Neu  if feld != []]  
 
@@ -59,5 +69,7 @@ if len(neue_liste) < 20:
 Kontrolle.stationsKontrolle(neue_liste)
 
 Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter)
+
+Temperaturueberwachung.temp_Ueberwachung(liste_DatenbankTemp)
 
 print(listeWetter)
