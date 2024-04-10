@@ -39,7 +39,7 @@ conn = pyodbc.connect(conn_str)
 # Cursor erstellen
 cursor = conn.cursor()
 # SQL-Statement ausführen
-cursor.execute('SELECT * FROM coolchain')
+cursor.execute('SELECT * FROM v_coolchain order by transportID,datetime')
 # Ergebnisse ausgeben
 for row in cursor:
     a = row
@@ -54,7 +54,7 @@ for iIndex_Liste_Alt in range (0, len(liste_Datenbank)):
     if iIndex_Liste_Alt == 0:
         liste_Neu[0].append(liste_Datenbank[iIndex_Liste_Alt])
 
-    elif liste_Neu[iIndex_Liste_Neu][0][1]== liste_Datenbank[iIndex_Liste_Alt][1]:
+    elif liste_Neu[iIndex_Liste_Neu][0][2]== liste_Datenbank[iIndex_Liste_Alt][2]:
         liste_Neu[iIndex_Liste_Neu].append(liste_Datenbank[iIndex_Liste_Alt])
 
     else :
@@ -71,13 +71,13 @@ while iIndex_Liste1 <len(liste_Neu):
 
         #Kontrolle von doppelten Lager Einträge
 
-        transportStation1   = liste_Neu[iIndex_Liste1][iStation][2]
-        transportStation2   = liste_Neu[iIndex_Liste1][iStation+2][2]
+        transportStation1   = liste_Neu[iIndex_Liste1][iStation][1]
+        transportStation2   = liste_Neu[iIndex_Liste1][iStation+2][1]
         transportRichtung1  = liste_Neu[iIndex_Liste1][iStation+1][4] 
         transportRichtung2  = liste_Neu[iIndex_Liste1][iStation+2][4]
 
         if transportStation1==transportStation2 and transportRichtung1 !=transportRichtung2:
-            print("ID:",liste_Neu[iIndex_Liste1][0][1],"|Verifikation: Aus und wieder Einchecken im gleichen Lager\n")
+            print("ID:",liste_Neu[iIndex_Liste1][0][2],"|Verifikation: Aus und wieder Einchecken im gleichen Lager\n")
             del liste_Neu[iIndex_Liste1]
             iIndex_Liste1 = 0
 
@@ -86,39 +86,27 @@ while iIndex_Liste1 <len(liste_Neu):
 
         #Kontrolle auf doppelte Einträge/Austräge
             
-        transportStation1  = liste_Neu[iIndex_Liste1][iZeit_Stempel][2] 
-        transportStation2  = liste_Neu[iIndex_Liste1][iZeit_Stempel+1][2]
+        transportStation1  = liste_Neu[iIndex_Liste1][iZeit_Stempel][1] 
+        transportStation2  = liste_Neu[iIndex_Liste1][iZeit_Stempel+1][1]
         transportRichtung1 = liste_Neu[iIndex_Liste1][iZeit_Stempel][4]
         transportRichtung2 = liste_Neu[iIndex_Liste1][iZeit_Stempel+1][4]
 
         if transportRichtung1 == transportRichtung2:
             if transportStation1==transportStation2:
                 if transportRichtung1 == "'out'":
-                    print("ID:",liste_Neu[iIndex_Liste1][0][1],"|Verifikation: Doppelter Austrag\n")
+                    print("ID:",liste_Neu[iIndex_Liste1][0][2],"|Verifikation: Doppelter Austrag\n")
                 else:  
-                    print("ID:",liste_Neu[iIndex_Liste1][0][1],"|Verifikation: Doppelter Eintrag\n")
+                    print("ID:",liste_Neu[iIndex_Liste1][0][2],"|Verifikation: Doppelter Eintrag\n")
                 
             else: #Kontrolle auf fehlende Einträge innerhalb der ID Tabelle
-                print("ID:",liste_Neu[iIndex_Liste1][0][1],"|Verifikation: Eintrag fehlt in der Mitte\n")
+                print("ID:",liste_Neu[iIndex_Liste1][0][2],"|Verifikation: Eintrag fehlt in der Mitte\n")
 
             del liste_Neu[iIndex_Liste1]
             iIndex_Liste1=0    
         
-        #Kontrolle zwischen Ein- und Auscheckzeiten
-
-        zeitstempel1 = liste_Neu[iIndex_Liste1][iZeit_Stempel][5]
-        zeitstempel2 = liste_Neu[iIndex_Liste1][iZeit_Stempel+1][5]
-
-        if zeitstempel1 > zeitstempel2:
-            print("ID:",liste_Neu[iIndex_Liste1][0][1],"|Verifikation: Eincheck und Ausscheck Zeiten stimmen nicht überein.\n")
-            del liste_Neu[iIndex_Liste1]
-            iIndex_Liste1 = 0
-        
-       
-    
     #Kontrolle von fehlenden Einträge am Ende
     if  len(liste_Neu[iIndex_Liste1])%2!=0:
-        print("ID:",liste_Neu[iIndex_Liste1][0][1],"|Verifikation: Eintrag fehlt am Anfang oder am Ende\n")
+        print("ID:",liste_Neu[iIndex_Liste1][0][2],"|Verifikation: Eintrag fehlt am Anfang oder am Ende\n")
         del liste_Neu[iIndex_Liste1]
         iIndex_Liste1=0      
 
@@ -133,7 +121,7 @@ while iIndex_Liste2 <len(liste_Neu):
         transportzeit2 = liste_Neu[iIndex_Liste2][iOhne_Kuehlung+1][5]
 
         if  transportzeit2 - transportzeit1 > dtZeit10:
-            print("ID:",liste_Neu[iIndex_Liste2][0][1],"|Verifikation: Übergabe > 10 min\n")
+            print("ID:",liste_Neu[iIndex_Liste2][0][2],"|Verifikation: Übergabe > 10 min\n")
             del liste_Neu[iIndex_Liste2]
             iIndex_Liste2=0
     iIndex_Liste2 += 1
@@ -146,7 +134,7 @@ while iIndex_Liste3 <len(liste_Neu):
     transportEnde   = liste_Neu[iIndex_Liste3][len(liste_Neu[iIndex_Liste3])-1][5]
 
     if transportEnde - transportAnfang > dtZeit48:
-        print("ID:",liste_Neu[iIndex_Liste3][0][1],"|Verifikation: Transportdauer > 48 min\n")
+        print("ID:",liste_Neu[iIndex_Liste3][0][2],"|Verifikation: Transportdauer > 48 min\n")
         del liste_Neu[iIndex_Liste3]
         iIndex_Liste3=0  
     else:
@@ -154,5 +142,5 @@ while iIndex_Liste3 <len(liste_Neu):
 
 #verbleibende IDs werden als Korrekt gekenntzeichnet
 while iIndex_Liste4 <len(liste_Neu):
-    print("ID:",liste_Neu[iIndex_Liste4][0][1],"|Verifikation: Korrekt\n")
+    print("ID:",liste_Neu[iIndex_Liste4][0][2],"|Verifikation: Korrekt\n")
     iIndex_Liste4=iIndex_Liste4+1
