@@ -4,7 +4,8 @@ import Kontrolle
 import Temperaturueberwachung
 liste_DatenbankCoolChain = []
 liste_DatenbankTemp = []
-listeWetter =[]
+listeFehler =[]
+listeWetter = []
 liste_Neu = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]] 
 
 from datetime import timedelta
@@ -61,15 +62,20 @@ Matrix_Erstellen.erstellen(liste_Neu,liste_DatenbankCoolChain)
 
 neue_liste = [feld for feld in liste_Neu  if feld != []]  
 
+eingabe = int(input("1: Kontrolle der Kühlkette\n2: Temperaturüberwachung\nWas möchtest du überprüfen:"))
 
+if eingabe == 1:
 # Kontrolle ob alle 20 IDs aufgelistet sind        
-if len(neue_liste) < 20:
-    print("Ein oder mehrer Einträge fehlen")
+    if len(neue_liste) < 20:
+        print("\nEin oder mehrere Einträge fehlen\n")
 
-Kontrolle.stationsKontrolle(neue_liste)
+    Kontrolle.stationsKontrolle(neue_liste,listeFehler)
 
-Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter)
+    Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter,listeFehler)
 
-Temperaturueberwachung.temp_Ueberwachung(liste_DatenbankTemp)
+    Kontrolle.zeitGesamt(neue_liste,dtZeit48)
 
-print(listeWetter)
+    Kontrolle.korrekt(neue_liste,listeFehler,listeWetter)
+if eingabe == 2:
+    Temperaturueberwachung.temp_Ueberwachung(liste_DatenbankTemp)
+
