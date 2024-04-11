@@ -2,32 +2,36 @@ def stationsKontrolle(liste,liste_Fehler):
     for Liste in range (0, len(liste)):
         
         for station in range (0,len(liste[Liste])-2,2):
+
             transportStation1=liste[Liste][station][1]
             transportStation2=liste[Liste][station+1][1]
             transportStation3=liste[Liste][station+2][1]
+
             direction1 = liste[Liste][station][4]
             direction2 = liste[Liste][station+1][4]
             direction3 = liste[Liste][station+2][4]
 
-            if transportStation1!=transportStation2 and transportStation3==transportStation2 and liste[Liste][0][2] not in liste_Fehler:
-                liste_Fehler.append(liste[Liste][0][2])
-                print("ID: ",liste[Liste][0][2],"|Aus- oder Eincheck-Zeitpunkt fehlt in der Mitte\n") 
+            ergebnis = liste[Liste][0][2]
+            if ergebnis not in liste_Fehler:
+                if transportStation1!=transportStation2 and transportStation3==transportStation2 :
+                    liste_Fehler.append(ergebnis)
+                    print("ID: ",ergebnis,"|Aus- oder Eincheck-Zeitpunkt fehlt in der Mitte\n") 
 
-            if transportStation1!=transportStation2 and direction1 == direction2 and liste[Liste][0][2] not in liste_Fehler:
-                liste_Fehler.append(liste[Liste][0][2])
-                print("ID: ",liste[Liste][0][2],"|Fehler bei den Transportstationen\n")  
+                if transportStation1!=transportStation2 and direction1 == direction2 :
+                    liste_Fehler.append(ergebnis)
+                    print("ID: ",ergebnis,"|Fehler bei den Transportstationen\n")  
 
-            if transportStation1==transportStation3 and direction1 == direction3 and liste[Liste][0][2] not in liste_Fehler:
-                liste_Fehler.append(liste[Liste][0][2])
-                print("ID: ",liste[Liste][0][2],"|Aus und wieder Einchecken im gleichen Kühllager\n")    
+                if transportStation1==transportStation3 and direction1 == direction3: 
+                    liste_Fehler.append(ergebnis)
+                    print("ID: ",ergebnis,"|Aus und wieder Einchecken im gleichen Kühllager\n")    
 
-            if transportStation3==transportStation2 and direction3 == direction2 and liste[Liste][0][2] not in liste_Fehler:
-                liste_Fehler.append(liste[Liste][0][2])
-                print("ID: ",liste[Liste][0][2],"|Doppelter Auscheck-Zeitpunkt\n")   
+                if transportStation3==transportStation2 and direction3 == direction2: 
+                    liste_Fehler.append(ergebnis)
+                    print("ID: ",ergebnis,"|Doppelter Auscheck-Zeitpunkt\n")   
 
-        if len(liste[Liste]) % 2 !=0 and liste[Liste][0][2] not in liste_Fehler:
-            liste_Fehler.append(liste[Liste][0][2])
-            print("ID: ",liste[Liste][0][2],"|Auscheck-Zeitpunkt fehlt am Ende da Tr. nicht abgeschlossen.\n")
+                if len(liste[Liste]) % 2 !=0:
+                    liste_Fehler.append(ergebnis)
+                    print("ID: ",ergebnis,"|Auscheck-Zeitpunkt fehlt am Ende da Tr. nicht abgeschlossen.\n")
                 
     return liste_Fehler
 
