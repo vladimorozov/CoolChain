@@ -62,29 +62,30 @@ conn.close()
 Matrix_Erstellen.erstellen(liste_Neu,liste_DatenbankCoolChain)
 
 neue_liste = [feld for feld in liste_Neu  if feld != []]  
-while True:
-    eingabe = int(input("1: Kontrolle der Kühlkette\n2: Temperaturüberwachung\n3: Wetter\nWas möchtest du überprüfen:"))
 
-    if eingabe == 1:
+eingabe = int(input("1: Kontrolle der Kühlkette\n2: Temperaturüberwachung\n3: Wetter\nWas möchtest du überprüfen:"))
+
+if eingabe == 1:
     # Kontrolle ob alle 20 IDs aufgelistet sind        
-        if len(neue_liste) < 20:
-            print("\nEin oder mehrere Einträge fehlen\n")
+    if len(neue_liste) < 20:
+        print("\nEin oder mehrere Einträge fehlen\n")
 
-        Kontrolle.stationsKontrolle(neue_liste,listeFehler,eingabe)
+    Kontrolle.stationsKontrolle(neue_liste,listeFehler,eingabe)
 
-        Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter,listeFehler,eingabe)
+    Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter,listeFehler,eingabe)
 
-        Kontrolle.zeitGesamt(neue_liste,dtZeit48)
+    Kontrolle.zeitGesamt(neue_liste,dtZeit48)
 
-        Kontrolle.korrekt(neue_liste,listeFehler,listeWetter)
+    Kontrolle.korrekt(neue_liste,listeFehler,listeWetter)
 
-    if eingabe == 2:
-        Temperaturueberwachung.temp_Ueberwachung(liste_DatenbankTemp)
+if eingabe == 2:
+    Temperaturueberwachung.temp_Ueberwachung(liste_DatenbankTemp)
 
-    if eingabe == 3:
+if eingabe == 3:
 
-        Kontrolle.stationsKontrolle(neue_liste,listeFehler,eingabe)
+    Kontrolle.stationsKontrolle(neue_liste,listeFehler,eingabe)
 
-        Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter,listeFehler,eingabe)
+    Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter,listeFehler,eingabe)
 
         #hier kommt dann dein Programm Nico, die beiden Funktionen darüber sind für die IDs über 10 min
+print(listeWetter)

@@ -50,8 +50,8 @@ def zeitKuehlung(liste,zeit,wetter,fehler,eingabe):
             transportzeit2 = liste[Liste][iOhne_Kuehlung+1][5]
 
             if  transportzeit2 - transportzeit1 > zeit and liste[Liste][0][2] not in wetter  and liste[Liste][0][2] not in fehler:
-                wetter.append(liste[Liste][0][2])
-                if eingabe ==1:
+                wetter.append([liste[Liste][0][2],liste[Liste][iOhne_Kuehlung][5],liste[Liste][iOhne_Kuehlung+1][5]])
+                if eingabe == 1:
                     print("ID:",liste[Liste][0][2],"|Verifikation: Übergabe > 10 min\n")
                 
                 
