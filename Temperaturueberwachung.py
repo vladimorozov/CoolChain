@@ -1,4 +1,4 @@
-
+#Temperaturüberwachung: alles außerhalb von 2-4° werden als Fehler ausgegeben.
 def temp_Ueberwachung(temmperatur):
     b =0
     while b < len(temmperatur):
