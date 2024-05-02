@@ -1,5 +1,6 @@
 #Import der einzelnen Funktionen
 import pyodbc
+import Wetter
 import Matrix_Erstellen 
 import Kontrolle
 import Temperaturueberwachung
@@ -105,4 +106,5 @@ if eingabe == 3:
 
     Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter,listeFehler,eingabe)
 
+    Wetter.woerterbuch(liste_DatenbankTransportstation,transportstation_dict,listeWetter,liste_Temperatren)
 #hier kommt dann dein Programm Nico, die beiden Funktionen darüber sind für die IDs über 10 min
