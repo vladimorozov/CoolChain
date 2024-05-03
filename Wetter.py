@@ -15,12 +15,12 @@ def woerterbuch (transportstationen, dictionary,wetter,temperaturen):
 
     for eintrag in wetter:
 
-        station_name = eintrag[3]
+        station_name1 = eintrag[3]
         datetime_obj = eintrag[1]
         transportID = eintrag [0]
+        print(eintrag[0])
 
-
-        postleitzahl = dictionary[station_name][2] + ",DE"
+        postleitzahl = dictionary[station_name1][2] + ",DE"
         hour = datetime_obj.hour
 
         timestamp = datetime_obj.strftime('%Y-%m-%dT%H:%M:%S') 

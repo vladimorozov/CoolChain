@@ -48,19 +48,17 @@ def stationsKontrolle(liste,liste_Fehler,eingabe):
 
 def zeitKuehlung(liste,zeit,wetter,fehler,eingabe):
     
-    for Liste in range (0, len(liste)):
+    for Tabelle in range (0, len(liste)):       #Zeile von 0 bis 19
     #Kontrolle Zeiträume ohne Kühlung
-        for iOhne_Kuehlung in range(1,len(liste[Liste])-2,2):
+        for iOhne_Kuehlung in range(1,len(liste[Tabelle])-2,2):
             
-            #Variablen werden übertragen
-            transportzeit1 = liste[Liste][iOhne_Kuehlung][5]
-            transportzeit2 = liste[Liste][iOhne_Kuehlung+1][5]
+            transportzeit1 = liste[Tabelle][iOhne_Kuehlung][5]      #Liste/Transport/
+            transportzeit2 = liste[Tabelle][iOhne_Kuehlung+1][5]
 
-            #Zeitstempeln werden verglichen: Fehler bei einer Zeitdifferenz von über 10 Min
-            if  transportzeit2 - transportzeit1 > zeit and liste[Liste][0][2] not in wetter  and liste[Liste][0][2] not in fehler:
-                wetter.append([liste[Liste][0][2],liste[Liste][iOhne_Kuehlung][5],liste[Liste][iOhne_Kuehlung+1][5]])
+            if  transportzeit2 - transportzeit1 > zeit and liste[Tabelle][0][2] not in wetter  and liste[Tabelle][0][2] not in fehler:
+                wetter.append([liste[Tabelle][0][2],liste[Tabelle][iOhne_Kuehlung][5],liste[Tabelle][iOhne_Kuehlung+1][5],liste[Tabelle][iOhne_Kuehlung][1]])
                 if eingabe == 1:
-                    print("ID:",liste[Liste][0][2],"|Verifikation: Übergabe > 10 min\n")
+                    print("ID:",liste[Tabelle][0][2],"|Verifikation: Übergabe > 10 min\n")
                 
                 
     return liste,wetter

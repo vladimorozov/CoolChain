@@ -4,6 +4,7 @@ import Wetter
 import Matrix_Erstellen 
 import Kontrolle
 import Temperaturueberwachung
+import decryption
 #Erstellung von bestimmten Listen
 liste_DatenbankCoolChain = []
 liste_DatenbankTemp = []
@@ -66,8 +67,14 @@ for row in cursor2:
 cursor2.close()
 conn.close()
 
-
-
+#Transportstation
+#cursor3 = conn.cursor()
+#cursor3.execute('SELECT * FROM transportstation')
+#for row in cursor3:
+#    c = row
+#    liste_DatenbankTransportstation.append(c)
+#cursor3.close()
+decryption.decrypt_db(liste_DatenbankTransportstation)
 
 
 
