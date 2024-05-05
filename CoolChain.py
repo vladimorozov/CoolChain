@@ -87,7 +87,7 @@ Matrix_Erstellen.erstellen(liste_Neu,liste_DatenbankCoolChain)
 neue_liste = [feld for feld in liste_Neu  if feld != []]  
 
 #Eingabe für die Kontrollauswahl
-eingabe = int(input("1: Kontrolle der Kühlkette\n2: Temperaturüberwachung\n3: Wetter\nWas möchtest du überprüfen:"))
+eingabe = int(input("1: Kontrolle der Kühlkette\n2: Temperaturüberwachung\n3: Wetter Transporte über 10 min\nWas möchtest du überprüfen:"))
 
 #Auswahl Vergleich für Stationskontrolle
 if eingabe == 1:
@@ -118,5 +118,5 @@ if eingabe == 3:
 
     Kontrolle.zeitKuehlung(neue_liste,dtZeit10,listeWetter,listeFehler,eingabe)
 
-    Wetter.woerterbuch(liste_DatenbankTransportstation,transportstation_dict,listeWetter,liste_Temperatren)
+    Wetter.berechne_durchschnittemp_transport(liste_DatenbankTransportstation,transportstation_dict,listeWetter,liste_Temperatren)
 
