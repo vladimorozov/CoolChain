@@ -65,6 +65,7 @@ for row in cursor2:
     b = row
     liste_DatenbankTemp.append(b)   
 cursor2.close()
+
 conn.close()
 
 #Transportstation
